@@ -49,12 +49,7 @@ def callProcess():
     zip_file_name = "QRCODES.zip"
     zip_directory(directory, zip_file_name)
 
-    file_list = os.listdir(directory)
-
-    for file_name in file_list:
-        if file_name != "ignore.txt":
-            file_path = os.path.join(directory, file_name)  
-            os.remove(file_path)  
+    file_list = os.listdir(directory) 
 
     messagebox.showinfo("Message", "The QR codes are generated")
     root.destroy()

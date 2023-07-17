@@ -4,8 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Hello Vercel World</h1>
+    <div class="container">
+        <h1 class="display-1">Download your QR code here</h1>
+      <label for="roll" class="form-label">Enter your Roll Number:</label>
+      <input type="text" name="roll" id="roll" placeholder="example 22BAVA01" class="form-control" autofocus>
+      <input type="submit" value="Download" class="btn btn-primary form-control" onclick="download()">
+    </div>
+<script>
+    function download(){
+        var roll= document.getElementById('roll').value;
+        var imageURL = `https://rollnumber-qr.vercel.app/qrcodes/${roll}.png`;
+        var link=document.createElement('a');
+        link.href=imageURL
+        link.download = '${roll}.png';
+        link.click()
+    }
+</script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
