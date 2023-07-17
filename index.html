@@ -23,7 +23,7 @@
         var imageURL = `https://rollnumber-qr.vercel.app/qrcodes/${roll}.png`;
         var link=document.createElement('a');
         link.href=imageURL
-        link.download = '${roll}.png';
+        link.download = '${imageURL}';
         link.click()
     }
 </script>
