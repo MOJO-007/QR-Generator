@@ -25,20 +25,10 @@
         function download(){
         var roll= document.getElementById('roll').value;
         var imageURL = `https://rollnumber-qr.vercel.app/qrcodes/${roll}.png`;
-
-        var http = new XMLHttpRequest();
-        http.open('HEAD', imageURL);
-        http.onreadystatechange = function() {
-            if(http.status === 200){
-                var link=document.createElement('a');
-                link.href=imageURL
-                link.download = '${imageURL}';
-                link.click()
-            }else{
-                alert("Error: Something went wrong! Kindly check the Entered Roll number.")
-            }
-        };
-        http.send();        
+        var link=document.createElement('a');
+        link.href=imageURL
+        link.download = '${imageURL}';
+        link.click()
         }
     </script>
 
