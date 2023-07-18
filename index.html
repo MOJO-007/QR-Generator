@@ -23,12 +23,23 @@
 
     <script>
         function download(){
-        var roll= document.getElementById('roll').value;
+        var roll= document.getElementById('roll').value.toUpperCase();
         var imageURL = `https://rollnumber-qr.vercel.app/qrcodes/${roll}.png`;
-        var link=document.createElement('a');
-        link.href=imageURL
-        link.download = '${imageURL}';
-        link.click()
+        var http = new XMLHttpRequest();
+        http.open('HEAD', imageURL);
+        http.onreadystatechange = function() {
+            if (http.status === 200) {
+                // Image exists, proceed with download
+                var link = document.createElement('a');
+                link.href = imageURL;
+                link.download = `${roll}.png`;
+                link.click();
+            } else {
+                // Image does not exist, show error message
+                alert("Error: The entered roll number does not have a corresponding QR code image.");
+            }
+        };
+        http.send();
         }
     </script>
 
