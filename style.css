@@ -1,18 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-*{
-    margin: 0px;
-    padding: 0px;
-    margin: 1px solid red;
-}
-
-html, body{
-    overflow-x: hidden;
-}
-
-body{
+body {
     background-color: #001220;
-    color: aliceblue;
+    color: black;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -20,16 +8,55 @@ body{
     flex-direction: column;
     font-family: 'Poppins', sans-serif;
     width: 100vw;
-}
-
-.form-control, .form-label{
-    margin-top: 15px;
+  }
+  
+  .container {
+    max-width: 400px;
+    background-color: white;
     border-radius: 10px;
-    padding: 15px;
-    font-size: 32px;
-}
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-control {
+    margin-left: 0;
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    color: black;
+    font-size: large;
+    border: 1px solid black;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #47a1ff;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #001220;
+    color: white;
+    border: 1px solid black;
+  }
 
-@media only screen and (max-width: 541px){
+  @media only screen and (max-width: 541px){
     .form-control, .form-label{
         font-size: 16px;
     }

@@ -5,10 +5,10 @@ import pyqrcode
 import pandas as pd
 import os
 import zipfile
-import subprocess
 import ctypes
 from PIL import Image, ImageDraw, ImageFont
-
+import time
+from tqdm import tqdm
 
 hwnd = ctypes.windll.kernel32.GetConsoleWindow()
 ctypes.windll.user32.ShowWindow(hwnd, 6)
@@ -68,7 +68,9 @@ def shortenName(Full_name):
 
 def createQRCode(file_path):
     df=pd.read_csv(file_path)
-    for index, values in df.iterrows():
+    maxrows=len(df)
+    
+    for index, values in tqdm(df.iterrows(), total=maxrows, desc="Creating QR Codes", unit="code"):
 
         number=values["Number"]
         name = values["Name"]
@@ -103,15 +105,16 @@ def zip_directory(directory, zip_file_name):
                 zip_file.write(os.path.join(root, file))
 
 def callProcess():
+    start_time=time.time()
     filename=process_csv()
     createQRCode(filename)
     directory = "./qrcodes"
     zip_file_name = "QRCODES.zip"
     zip_directory(directory, zip_file_name)
 
-    file_list = os.listdir(directory) 
-
-    messagebox.showinfo("Message", "The QR codes are generated")
+    end_time=time.time()
+    time_taken=end_time-start_time
+    messagebox.showinfo("Message", "The QR codes are generated in : {:.1f} seconds".format(time_taken))
     root.destroy()
 
 def center_window(window):
