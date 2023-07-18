@@ -30,23 +30,12 @@
 
         function download(){
             var roll= document.getElementById('roll').value.toUpperCase();
+            console.log(roll)
             var imageURL = `https://rollnumber-qr.vercel.app/qrcodes/${roll}.png`;
-
-            fetch(imageURL)
-                .then(response=>{
-                    if(response.ok){
-                        console.log("The file exists");
-                    }
-                    else if(response.status === 400){
-                        console.log("File does not exist");
-                    }
-                    else{
-                        console.log("Error checking the file existence:", response.status, response.statusText);
-                    }
-                })
-                .catch(error=>{
-                    console.log("Error fetching the file:", error);
-                });
+            var link=document.createElement('a');
+            link.href=imageURL
+            link.download = '${roll}.png';
+            link.click()
         }
     </script>
 
