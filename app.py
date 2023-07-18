@@ -7,6 +7,7 @@ import os
 import zipfile
 import subprocess
 import ctypes
+from PIL import Image, ImageDraw, ImageFont
 
 
 hwnd = ctypes.windll.kernel32.GetConsoleWindow()
@@ -22,19 +23,78 @@ def process_csv():
         root.destroy()
         return 0
         
+def shortenName(Full_name):
+    name_parts=Full_name.split()
+    if len(name_parts) >= 3:
+        if len(name_parts[0]) == 1:
+            if len(name_parts[1])== 1:
+                full_first_name= name_parts[-1] if len(name_parts[-1]) > 0 else ""
+                second_initial = name_parts[0][0]
+                third_initial = name_parts [1][0]
+            else:
+                second_initial = name_parts[0][0]
+                full_first_name = name_parts[1]
+                third_initial = name_parts[-1][0] if len(name_parts[-1]) > 0 else ""
         
+        elif len(name_parts[1])== 1:
+            full_first_name = name_parts[0]
+            second_initial= name_parts[1][0]
+            third_initial= name_parts [-1][0]
+
+        else:
+            full_first_name = name_parts[0]
+            second_initial = name_parts[1][0] if len(name_parts[1]) > 0 else ""
+            third_initial = name_parts[-1][0] if len(name_parts[-1]) > 0 else ""
+
+    elif len(name_parts) == 2:
+        if len(name_parts[0]) == 1:
+            full_first_name=name_parts[1]
+            second_initial=name_parts[0][0]
+            third_initial=""
+
+        else:
+            full_first_name = name_parts[0]
+            second_initial = name_parts[-1][0] if len(name_parts[-1]) > 0 else ""
+            third_initial=""
+
+    elif len(name_parts) == 1:
+        full_first_name = name_parts[0]
+        second_initial=""
+        third_initial=""
+
+    shortName=full_first_name+" "+second_initial+" "+third_initial
+    return shortName
+
 
 def createQRCode(file_path):
     df=pd.read_csv(file_path)
     for index, values in df.iterrows():
 
         number=values["Number"]
-        
+        name = values["Name"]
+        name=shortenName(name)  
+        print(name)
         data=f'''{number}'''
-    
         image=pyqrcode.create(data)
+        image.png(f"qrcodes/{number}.png",scale="17")
 
-        image.png(f"qrcodes/{number}.png",scale="5")
+
+        template_image=Image.open("Template.png")
+        qr_image=Image.open(f"qrcodes/{number}.png")
+        Image.Image.paste(template_image,qr_image,(285,600))
+        template_image.save(f"qrcodes/{number}.png")
+
+
+        img= Image.open(f"qrcodes/{number}.png")
+        d=ImageDraw.Draw(img)
+        fnt= ImageFont.truetype("Montserrat/Montserrat-VariableFont_wght.ttf",70)
+        fnt2=ImageFont.truetype("Montserrat/Montserrat-VariableFont_wght.ttf",90)
+        text_color = 'black'
+        d.text((325,1335),name,font=fnt,fill=text_color, stroke_width=3, align='left')
+        d.text((375,1450),number,font=fnt,stroke_width=4,align='center',fill='#BDA8E9')
+        img.save(f"qrcodes/{number}.png")
+        
+
 
 def zip_directory(directory, zip_file_name):
     with zipfile.ZipFile(zip_file_name, "w") as zip_file:
