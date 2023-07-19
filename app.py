@@ -117,6 +117,13 @@ def callProcess():
     messagebox.showinfo("Message", "The QR codes are generated in : {:.1f} seconds".format(time_taken))
     root.destroy()
 
+    file_list = os.listdir(directory)
+
+    for file_name in file_list:
+        if file_name != "ignore.txt":
+            file_path = os.path.join(directory, file_name)  
+            os.remove(file_path)
+
 def center_window(window):
     window.update_idletasks()
     width = window.winfo_width()
