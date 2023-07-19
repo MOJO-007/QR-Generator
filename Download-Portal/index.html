@@ -31,11 +31,18 @@
         function download(){
             var roll= document.getElementById('roll').value.toUpperCase();
             console.log(roll)
-            var imageURL = `https://rollnumber-qr.vercel.app/qrcodes/${roll}.png`;
-            var link=document.createElement('a');
-            link.href=imageURL
-            link.download = '${roll}.png';
-            link.click()
+            const pattern=/^(21|22)BCA(0[0-9]|1[0-9]|2[0-4])$/;
+            if(pattern.test(roll)){
+                var imageURL = `https://rollnumber-qr.vercel.app/qrcodes/${roll}.png`;
+                var link=document.createElement('a');
+                link.href=imageURL
+                link.download = '${roll}.png';
+                link.click()
+            }
+            else{
+                alert("Invalid Roll number");
+            }
+            
         }
     </script>
 

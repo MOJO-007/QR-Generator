@@ -109,7 +109,7 @@ def callProcess():
     filename=process_csv()
     createQRCode(filename)
     directory = "./qrcodes"
-    zip_file_name = "QRCODES.zip"
+    zip_file_name = "qrcodes.zip"
     zip_directory(directory, zip_file_name)
 
     end_time=time.time()
